@@ -12,12 +12,20 @@ shinyServer(function(input, output) {
   })
   
   output$table <- renderTable({
+    n <- nrow(diamonds)
     x <- datasetInput()
+    x <- x[ , input$variables, drop=FALSE]
+    if (input$random) {
+      cat("foo")
+      x <- x[sample(seq_len(n), input$obs, replace=FALSE), , drop=FALSE]
+    } else {
+      x <- head(x, input$obs)
+    }
     if (input$sort != " ") {
       sorder <- order(x[[input$sort]])
-      x <- x[sorder, ]
-    } 
-    x[seq_len(input$obs), input$variables, drop=FALSE]
+      x <- x[sorder, , drop=FALSE]
+    }
+    x
   })
 
   source("plot.R", local=TRUE)

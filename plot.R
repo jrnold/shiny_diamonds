@@ -2,7 +2,7 @@ dataInput <- reactive({diamonds})
 
 output$plot <- renderPlot({
   args <- list(data = dataInput())
-  for (i in c("x", "y", "color", "fill", "shape")) {
+  for (i in c("x", "y", "color", "fill", "shape", "size")) {
     if (input[[i]] != " ") {
       args[[i]] <- as.name(input[[i]])
       }
